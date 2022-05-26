@@ -8,11 +8,11 @@ WHITE_WIN = 1
 BLACK_WIN = 0
 DRAW = 0.5
 
-syzygy = chess.syzygy.open_tablebase("/home/levigibson/Documents/static/arenalinux_64bit_3.10beta/TB/syzygy/")
 
 class NnomTrainer:
-    def __init__(self):
-        self.net = ReinforcmentLearningNet([512, 128], [RELU, SIGMOID], modelPath='network')
+    def __init__(self, syzygyPath, modelPath=None):
+        self.net = ReinforcmentLearningNet([512, 128], [RELU, SIGMOID], modelPath=modelPath)
+        self.syzygy = chess.syzygy.open_tablebase(syzygyPath)
 
     def play_game(self):
         gameResult = DRAW
