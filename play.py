@@ -30,7 +30,7 @@ class NnomTrainer:
             board.push(predmove)
 
             try:
-                tbres = syzygy.probe_wdl(board)
+                tbres = self.syzygy.probe_wdl(board)
                 if tbres != 0:
                     if tbres > 0:
                         return WHITE_WIN if board.turn == chess.WHITE else BLACK_WIN
