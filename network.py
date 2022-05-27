@@ -45,27 +45,29 @@ class ReinforcmentLearningNet:
         networkOutput *= np.random.random_sample(networkOutput.shape)
         networkOutput = networkOutput.reshape((2, 64))
 
-        maxEval = -1
-        maxMove = None
+
 
         legalMoves = list(board.legal_moves)
+        maxEval = -1
+        maxMove = legalMoves[0]
+
         for legalMoveCount, move in enumerate(legalMoves):
-            board.push(move)
-            if legalMoveCount and board.can_claim_threefold_repetition():
+                board.push(move)
+                if board.can_claim_threefold_repetition():
+                    board.pop()
+                    continue
+                if board.is_checkmate():
+                    board.pop()
+                    return move
                 board.pop()
-                continue
-            if board.is_checkmate():
-                board.pop()
-                return move
-            board.pop()
 
-            i1, i2 = labels.move_to_index(move, board)
-            score = networkOutput[0][i1] * networkOutput[1][i2]
-            if score > maxEval:
-                maxEval = score
-                maxMove = move
+                i1, i2 = labels.move_to_index(move, board)
+                score = networkOutput[0][i1] * networkOutput[1][i2]
+                if score > maxEval:
+                    maxEval = score
+                    maxMove = move
 
-        return maxMove
+            return maxMove
 
 if __name__ == '__main__':
     r = ReinforcmentLearningNet([512, 128],
