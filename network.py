@@ -67,7 +67,7 @@ class ReinforcmentLearningNet:
                     maxEval = score
                     maxMove = move
 
-            return maxMove
+        return maxMove
 
 if __name__ == '__main__':
     r = ReinforcmentLearningNet([512, 128],
