@@ -49,8 +49,11 @@ class ReinforcmentLearningNet:
         maxMove = None
 
         legalMoves = list(board.legal_moves)
-        for move in legalMoves:
+        for legalMoveCount, move in enumerate(legalMoves):
             board.push(move)
+            if legalMoveCount and board.can_claim_threefold_repetition():
+                board.pop()
+                continue
             if board.is_checkmate():
                 board.pop()
                 return move
